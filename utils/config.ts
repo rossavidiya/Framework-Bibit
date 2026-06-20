@@ -9,10 +9,10 @@ import * as dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, 'credentials.env') });
 
 export const testerConfig = {
-    tester: "QA PKD",
-    role: "Tester",
-    instansi: "Bank Indonesia",
-    project: "DEMO WEB",
+    tester: "Vidiya Rossa Atfira",
+    role: "QA",
+    instansi: "Ocean",
+    project: "Bibit",
     defaultSleep: 500,
     // Ambil data dari .env
     credentials: {
@@ -25,7 +25,7 @@ export const testerConfig = {
 
 export function initializeTestPaths() {
     // 1. Definisikan Folder Induk
-    const parentFolder = "Report Testing PKD DIDD";
+    const parentFolder = "REPORT TESTING";
     const ts = new Date().toISOString().replace(/[:.]/g, '-');
     
     // 2. Gabungkan folder induk dengan folder hasil spesifik
@@ -207,6 +207,18 @@ export async function finalizeTest(
         console.error(`❌ ${finalError.message}`);
         console.error(`${'═'.repeat(60)}\n`);
     }
+}
+
+/**
+ * Hitung durasi eksekusi test dari waktu mulai sampai sekarang.
+ * Contoh hasil: "2 menit 15 detik"
+ */
+export function hitungDurasi(startTime: number): string {
+    const selisihMs = Date.now() - startTime;
+    const totalDetik = Math.floor(selisihMs / 1000);
+    const menit = Math.floor(totalDetik / 60);
+    const detik = totalDetik % 60;
+    return `${menit} menit ${detik} detik`;
 }
 
 export function getFormattedTime() {

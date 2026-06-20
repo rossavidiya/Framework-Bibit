@@ -55,10 +55,23 @@ export async function captureStep(page: Page, imgDir: string, timestamp: string,
 }
 
 /**
- * Fungsi untuk maximize viewport sesuai ukuran layar secara dinamis
+ * Fungsi untuk maximize viewport sesuai ukuran layar secara dinamis.
+ * Pada mode mobile (isMobile), viewport sudah diatur oleh device profile,
+ * jadi tidak perlu di-override.
  */
 export async function maximizeViewport(page: Page) {
-    // Dapatkan ukuran layar dari browser
+    // Cek apakah sedang di mode mobile device
+    const isMobile = await page.evaluate(() => {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    });
+
+    if (isMobile) {
+        const vp = page.viewportSize();
+        console.log(`[📱 MOBILE VIEWPORT]: ${vp?.width}x${vp?.height}`);
+        return; // Jangan override viewport di mobile
+    }
+
+    // Desktop: maximize viewport sesuai ukuran layar
     const screenSize = await page.evaluate(() => {
         return {
             width: window.screen.availWidth,
@@ -66,11 +79,10 @@ export async function maximizeViewport(page: Page) {
         };
     });
     
-    // Set viewport sesuai ukuran layar
     await page.setViewportSize({
         width: screenSize.width,
         height: screenSize.height
     });
     
-    console.log(`[🖥️ VIEWPORT]: ${screenSize.width}x${screenSize.height}`);
+    console.log(`[🖥️ DESKTOP VIEWPORT]: ${screenSize.width}x${screenSize.height}`);
 }

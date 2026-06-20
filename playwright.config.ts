@@ -34,10 +34,10 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         /* Konfigurasi Proxy agar browser bisa menembus firewall */
-    proxy: {
-      server: 'http://inetgw2-proxy.corp.bi.go.id:8080',
-      bypass: 'devtfapp03, localhost, 127.0.0.1,devdiddsw02.corp.bi.go.id,https://wakatobi.corp.bi.go.id:8443', // Menghindari blokir sistem internal
-    },
+    // proxy: {
+    //   server: 'http://inetgw2-proxy.corp.bi.go.id:8080',
+    //   bypass: 'devtfapp03, localhost, 127.0.0.1,devdiddsw02.corp.bi.go.id,https://wakatobi.corp.bi.go.id:8443', // Menghindari blokir sistem internal
+    // },
    
         /* Mengabaikan error sertifikat yang sering muncul di jaringan internal */
     ignoreHTTPSErrors: true,
@@ -49,39 +49,21 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chorium',
-      use: { ...devices['Desktop chorium'] },
-      },
-    
-
+      name: 'Desktop',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    },
     // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
+    //   name: 'iPhone-14',
+    //   use: { 
+    //     ...devices['iPhone 14'],
+    //     // Override: pakai Chrome karena WebKit belum bisa di-download (proxy kantor)
+    //     browserName: 'chromium',
+    //     channel: 'chrome',
+    //   },
     // },
     // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    //   name: 'iPhone-14-Pro-Max',
+    //   use: { ...devices['iPhone 14 Pro Max'] },
     // },
   ],
 
